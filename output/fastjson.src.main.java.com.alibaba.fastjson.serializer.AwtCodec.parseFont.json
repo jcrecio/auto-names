@@ -1,0 +1,37 @@
+{
+    "original": {
+        "method_name": "parseFont",
+        "code": "protected Font parseFont(DefaultJSONParser parser){  JSONLexer lexer=parser.lexer;  int size=0, style=0;  String name=null;  for (; ; ) {    if (lexer.token() == JSONToken.RBRACE) {      lexer.nextToken();      break;    }    String key;    if (lexer.token() == JSONToken.LITERAL_STRING) {      key=lexer.stringVal();      lexer.nextTokenWithColon(JSONToken.LITERAL_INT);    } else {      throw new JSONException(\"syntax error\");    }    if (key.equalsIgnoreCase(\"name\")) {      if (lexer.token() == JSONToken.LITERAL_STRING) {        name=lexer.stringVal();        lexer.nextToken();      } else {        throw new JSONException(\"syntax error\");      }    } else     if (key.equalsIgnoreCase(\"style\")) {      if (lexer.token() == JSONToken.LITERAL_INT) {        style=lexer.intValue();        lexer.nextToken();      } else {        throw new JSONException(\"syntax error\");      }    } else     if (key.equalsIgnoreCase(\"size\")) {      if (lexer.token() == JSONToken.LITERAL_INT) {        size=lexer.intValue();        lexer.nextToken();      } else {        throw new JSONException(\"syntax error\");      }    } else {      throw new JSONException(\"syntax error, \" + key);    }    if (lexer.token() == JSONToken.COMMA) {      lexer.nextToken(JSONToken.LITERAL_STRING);    }  }  return new Font(name,style,size);}",
+        "extraction_name": null,
+        "predictions": [
+            "parseFontData",
+            "parseFont"
+        ],
+        "similarities": [
+            0.6311797033358043,
+            1.0
+        ],
+        "file_name": "fastjson.src.main.java.com.alibaba.fastjson.serializer.AwtCodec.parseFont.Original.java"
+    },
+    "extractions": [
+        {
+            "method_name": "parseFont",
+            "code": "protected Font parseFont(DefaultJSONParser parser){  JSONLexer lexer=parser.lexer;  int size=0, style=0;  String name=null;  for (; ; ) {    if (lexer.token() == JSONToken.RBRACE) {      lexer.nextToken();      break;    }    String key;    if (lexer.token() == JSONToken.LITERAL_STRING) {      key=lexer.stringVal();      lexer.nextTokenWithColon(JSONToken.LITERAL_INT);    } else {      throw new JSONException(\"syntax error\");    }    if (key.equalsIgnoreCase(\"name\")) {      if (lexer.token() == JSONToken.LITERAL_STRING) {        name=lexer.stringVal();        lexer.nextToken();      } else {        throw new JSONException(\"syntax error\");      }    } else     if (key.equalsIgnoreCase(\"style\")) {      if (lexer.token() == JSONToken.LITERAL_INT) {        style=lexer.intValue();        lexer.nextToken();      } else {        throw new JSONException(\"syntax error\");      }    } else     size=parseFont_extraction_2(lexer,size,key);    if (lexer.token() == JSONToken.COMMA) {      lexer.nextToken(JSONToken.LITERAL_STRING);    }  }  return new Font(name,style,size);}",
+            "extraction_name": "Extraction1",
+            "prediction": "parseSize",
+            "similarity": null,
+            "file_name": "fastjson.src.main.java.com.alibaba.fastjson.serializer.AwtCodec.parseFont.Extraction1.java",
+            "updated_code": "protected Font parseFont(DefaultJSONParser parser){  JSONLexer lexer=parser.lexer;  int size=0, style=0;  String name=null;  for (; ; ) {    if (lexer.token() == JSONToken.RBRACE) {      lexer.nextToken();      break;    }    String key;    if (lexer.token() == JSONToken.LITERAL_STRING) {      key=lexer.stringVal();      lexer.nextTokenWithColon(JSONToken.LITERAL_INT);    } else {      throw new JSONException(\"syntax error\");    }    if (key.equalsIgnoreCase(\"name\")) {      if (lexer.token() == JSONToken.LITERAL_STRING) {        name=lexer.stringVal();        lexer.nextToken();      } else {        throw new JSONException(\"syntax error\");      }    } else     if (key.equalsIgnoreCase(\"style\")) {      if (lexer.token() == JSONToken.LITERAL_INT) {        style=lexer.intValue();        lexer.nextToken();      } else {        throw new JSONException(\"syntax error\");      }    } else     size=parseSize(lexer,size,key);    if (lexer.token() == JSONToken.COMMA) {      lexer.nextToken(JSONToken.LITERAL_STRING);    }  }  return new Font(name,style,size);}"
+        },
+        {
+            "method_name": "parseFont",
+            "code": "protected Font parseFont(DefaultJSONParser parser){  JSONLexer lexer=parser.lexer;  int size=0, style=0;  String name=null;  for (; ; ) {    if (lexer.token() == JSONToken.RBRACE) {      lexer.nextToken();      break;    }    String key;    if (lexer.token() == JSONToken.LITERAL_STRING) {      key=lexer.stringVal();      lexer.nextTokenWithColon(JSONToken.LITERAL_INT);    } else {      throw new JSONException(\"syntax error\");    }    if (key.equalsIgnoreCase(\"name\")) {      if (lexer.token() == JSONToken.LITERAL_STRING) {        name=lexer.stringVal();        lexer.nextToken();      } else {        throw new JSONException(\"syntax error\");      }    } else     if (key.equalsIgnoreCase(\"style\")) {      style=parseFont_extraction_1(lexer,style);    } else     size=parseFont_extraction_2(lexer,size,key);    if (lexer.token() == JSONToken.COMMA) {      lexer.nextToken(JSONToken.LITERAL_STRING);    }  }  return new Font(name,style,size);}",
+            "extraction_name": "Extraction2",
+            "prediction": "parseStyle",
+            "similarity": null,
+            "file_name": "fastjson.src.main.java.com.alibaba.fastjson.serializer.AwtCodec.parseFont.Extraction2.java",
+            "updated_code": "protected Font parseFont(DefaultJSONParser parser){  JSONLexer lexer=parser.lexer;  int size=0, style=0;  String name=null;  for (; ; ) {    if (lexer.token() == JSONToken.RBRACE) {      lexer.nextToken();      break;    }    String key;    if (lexer.token() == JSONToken.LITERAL_STRING) {      key=lexer.stringVal();      lexer.nextTokenWithColon(JSONToken.LITERAL_INT);    } else {      throw new JSONException(\"syntax error\");    }    if (key.equalsIgnoreCase(\"name\")) {      if (lexer.token() == JSONToken.LITERAL_STRING) {        name=lexer.stringVal();        lexer.nextToken();      } else {        throw new JSONException(\"syntax error\");      }    } else     if (key.equalsIgnoreCase(\"style\")) {      style=parseStyle(lexer,style);    } else     size=parseSize(lexer,size,key);    if (lexer.token() == JSONToken.COMMA) {      lexer.nextToken(JSONToken.LITERAL_STRING);    }  }  return new Font(name,style,size);}"
+        }
+    ],
+    "file_name": null
+}

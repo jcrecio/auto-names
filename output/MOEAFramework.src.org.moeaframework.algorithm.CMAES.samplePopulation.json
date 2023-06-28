@@ -1,0 +1,37 @@
+{
+    "original": {
+        "method_name": "samplePopulation",
+        "code": "/**  * Samples a new population. */private void samplePopulation(){  boolean feasible=true;  int N=problem.getNumberOfVariables();  if ((iteration - lastEigenupdate) > 1.0 / ccov / N/ 5.0) {    eigendecomposition();  }  if (checkConsistency) {    testAndCorrectNumerics();  }  population.clear();  for (int i=0; i < lambda; i++) {    Solution solution=problem.newSolution();    if (diagonalIterations >= iteration) {      do {        feasible=true;        for (int j=0; j < N; j++) {          RealVariable variable=(RealVariable)solution.getVariable(j);          double value=xmean[j] + sigma * diagD[j] * PRNG.nextGaussian();          if (value < variable.getLowerBound() || value > variable.getUpperBound()) {            feasible=false;            break;          }          variable.setValue(value);        }      } while (!feasible);    } else {      double[] artmp=new double[N];      do {        feasible=true;        for (int j=0; j < N; j++) {          artmp[j]=diagD[j] * PRNG.nextGaussian();        }        for (int j=0; j < N; j++) {          RealVariable variable=(RealVariable)solution.getVariable(j);          double sum=0.0;          for (int k=0; k < N; k++) {            sum+=B[j][k] * artmp[k];          }          double value=xmean[j] + sigma * sum;          if (value < variable.getLowerBound() || value > variable.getUpperBound()) {            feasible=false;            break;          }          variable.setValue(value);        }      } while (!feasible);    }    population.add(solution);  }  iteration++;}",
+        "extraction_name": null,
+        "predictions": [
+            "samplePopulation_checkFeasibility",
+            "samplePopulation"
+        ],
+        "similarities": [
+            0.8243320889090123,
+            1.0
+        ],
+        "file_name": "MOEAFramework.src.org.moeaframework.algorithm.CMAES.samplePopulation.Original.java"
+    },
+    "extractions": [
+        {
+            "method_name": "samplePopulation",
+            "code": "/**  * Samples a new population. */private void samplePopulation(){  boolean feasible=true;  int N=problem.getNumberOfVariables();  if ((iteration - lastEigenupdate) > 1.0 / ccov / N/ 5.0) {    eigendecomposition();  }  if (checkConsistency) {    testAndCorrectNumerics();  }  population.clear();  for (int i=0; i < lambda; i++) {    Solution solution=problem.newSolution();    if (diagonalIterations >= iteration) {      do {        feasible=true;        for (int j=0; j < N; j++) {          RealVariable variable=(RealVariable)solution.getVariable(j);          double value=xmean[j] + sigma * diagD[j] * PRNG.nextGaussian();          if (value < variable.getLowerBound() || value > variable.getUpperBound()) {            feasible=false;            break;          }          variable.setValue(value);        }      } while (!feasible);    } else {      double[] artmp=new double[N];      do {        feasible=samplePopulation_extraction_2(N,solution,artmp);      } while (!feasible);    }    population.add(solution);  }  iteration++;}",
+            "extraction_name": "Extraction1",
+            "prediction": "samplePopulation_checkFeasibility",
+            "similarity": null,
+            "file_name": "MOEAFramework.src.org.moeaframework.algorithm.CMAES.samplePopulation.Extraction1.java",
+            "updated_code": "/**  * Samples a new population. */private void samplePopulation(){  boolean feasible=true;  int N=problem.getNumberOfVariables();  if ((iteration - lastEigenupdate) > 1.0 / ccov / N/ 5.0) {    eigendecomposition();  }  if (checkConsistency) {    testAndCorrectNumerics();  }  population.clear();  for (int i=0; i < lambda; i++) {    Solution solution=problem.newSolution();    if (diagonalIterations >= iteration) {      do {        feasible=true;        for (int j=0; j < N; j++) {          RealVariable variable=(RealVariable)solution.getVariable(j);          double value=xmean[j] + sigma * diagD[j] * PRNG.nextGaussian();          if (value < variable.getLowerBound() || value > variable.getUpperBound()) {            feasible=false;            break;          }          variable.setValue(value);        }      } while (!feasible);    } else {      double[] artmp=new double[N];      do {        feasible=samplePopulation_checkFeasibility(N,solution,artmp);      } while (!feasible);    }    population.add(solution);  }  iteration++;}"
+        },
+        {
+            "method_name": "samplePopulation",
+            "code": "/**  * Samples a new population. */private void samplePopulation(){  boolean feasible=true;  int N=problem.getNumberOfVariables();  if ((iteration - lastEigenupdate) > 1.0 / ccov / N/ 5.0) {    eigendecomposition();  }  if (checkConsistency) {    testAndCorrectNumerics();  }  population.clear();  for (int i=0; i < lambda; i++) {    Solution solution=problem.newSolution();    if (diagonalIterations >= iteration) {      do {        feasible=true;        feasible=samplePopulation_extraction_1(feasible,N,solution);      } while (!feasible);    } else {      double[] artmp=new double[N];      do {        feasible=samplePopulation_extraction_2(N,solution,artmp);      } while (!feasible);    }    population.add(solution);  }  iteration++;}",
+            "extraction_name": "Extraction2",
+            "prediction": "samplePopulation_checkVariables",
+            "similarity": null,
+            "file_name": "MOEAFramework.src.org.moeaframework.algorithm.CMAES.samplePopulation.Extraction2.java",
+            "updated_code": "/**  * Samples a new population. */private void samplePopulation(){  boolean feasible=true;  int N=problem.getNumberOfVariables();  if ((iteration - lastEigenupdate) > 1.0 / ccov / N/ 5.0) {    eigendecomposition();  }  if (checkConsistency) {    testAndCorrectNumerics();  }  population.clear();  for (int i=0; i < lambda; i++) {    Solution solution=problem.newSolution();    if (diagonalIterations >= iteration) {      do {        feasible=true;        feasible=samplePopulation_checkVariables(feasible,N,solution);      } while (!feasible);    } else {      double[] artmp=new double[N];      do {        feasible=samplePopulation_checkFeasibility(N,solution,artmp);      } while (!feasible);    }    population.add(solution);  }  iteration++;}"
+        }
+    ],
+    "file_name": null
+}

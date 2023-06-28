@@ -1,0 +1,37 @@
+{
+    "original": {
+        "method_name": "convert",
+        "code": "@Override public JSONObject convert(JSONArray widgetFilters){  ;  JSONObject selections=new JSONObject();  JSONObject datasetFilters=new JSONObject();  if (filters != null) {    JSONObject obj=filters.optJSONObject(dataSetLabel);    if (obj != null) {      String[] names=JSONObject.getNames(obj);      if (names != null) {        for (int i=0; i < names.length; i++) {          String filter=names[i];          JSONArray array=new JSONArray();          try {            array.put(\"('\" + obj.get(filter) + \"')\");            datasetFilters.put(filter,array);          } catch (          JSONException e) {          }        }      }    }  }  if (widgetFilters != null) {    for (int i=0; i < widgetFilters.length(); i++) {      JSONObject widgetFilter;      try {        widgetFilter=widgetFilters.getJSONObject(i);        JSONArray filterVals=widgetFilter.getJSONArray(\"filterVals\");        if (filterVals.length() > 0) {          String colName=widgetFilter.getString(\"colName\");          JSONArray values=new JSONArray();          for (int j=0; j < filterVals.length(); j++) {            Object filterVal=filterVals.get(j);            values.put(\"('\" + filterVal + \"')\");          }          String filterOperator=widgetFilter.getString(\"filterOperator\");          if (filterOperator != null) {            JSONObject filter=new JSONObject();            filter.put(\"filterOperator\",filterOperator);            filter.put(\"filterVals\",values);            datasetFilters.put(colName,filter);          } else {            datasetFilters.put(colName,values);          }        }      } catch (      JSONException e) {      }    }  }  try {    selections.put(dataSetLabel,datasetFilters);  } catch (  JSONException e) {  }  return selections;}",
+        "extraction_name": null,
+        "predictions": [
+            "extractWidgetFilter",
+            "addFilterToDataset"
+        ],
+        "similarities": [
+            0.5378516458389521,
+            0.45005303421007303
+        ],
+        "file_name": "knowage-core.src.main.java.it.eng.knowage.document.export.cockpit.converter.SelectionsConverter.convert.Original.java"
+    },
+    "extractions": [
+        {
+            "method_name": "convert",
+            "code": "@Override public JSONObject convert(JSONArray widgetFilters){  ;  JSONObject selections=new JSONObject();  JSONObject datasetFilters=new JSONObject();  if (filters != null) {    JSONObject obj=filters.optJSONObject(dataSetLabel);    if (obj != null) {      String[] names=JSONObject.getNames(obj);      if (names != null) {        for (int i=0; i < names.length; i++) {          String filter=names[i];          JSONArray array=new JSONArray();          try {            array.put(\"('\" + obj.get(filter) + \"')\");            datasetFilters.put(filter,array);          } catch (          JSONException e) {          }        }      }    }  }  if (widgetFilters != null) {    for (int i=0; i < widgetFilters.length(); i++) {      JSONObject widgetFilter;      convert_extraction_2(widgetFilters,datasetFilters,i);    }  }  try {    selections.put(dataSetLabel,datasetFilters);  } catch (  JSONException e) {  }  return selections;}",
+            "extraction_name": "Extraction1",
+            "prediction": "extractWidgetFilter",
+            "similarity": null,
+            "file_name": "knowage-core.src.main.java.it.eng.knowage.document.export.cockpit.converter.SelectionsConverter.convert.Extraction1.java",
+            "updated_code": "@Override public JSONObject convert(JSONArray widgetFilters){  ;  JSONObject selections=new JSONObject();  JSONObject datasetFilters=new JSONObject();  if (filters != null) {    JSONObject obj=filters.optJSONObject(dataSetLabel);    if (obj != null) {      String[] names=JSONObject.getNames(obj);      if (names != null) {        for (int i=0; i < names.length; i++) {          String filter=names[i];          JSONArray array=new JSONArray();          try {            array.put(\"('\" + obj.get(filter) + \"')\");            datasetFilters.put(filter,array);          } catch (          JSONException e) {          }        }      }    }  }  if (widgetFilters != null) {    for (int i=0; i < widgetFilters.length(); i++) {      JSONObject widgetFilter;      extractWidgetFilter(widgetFilters,datasetFilters,i);    }  }  try {    selections.put(dataSetLabel,datasetFilters);  } catch (  JSONException e) {  }  return selections;}"
+        },
+        {
+            "method_name": "convert",
+            "code": "@Override public JSONObject convert(JSONArray widgetFilters){  ;  JSONObject selections=new JSONObject();  JSONObject datasetFilters=new JSONObject();  if (filters != null) {    JSONObject obj=filters.optJSONObject(dataSetLabel);    if (obj != null) {      String[] names=JSONObject.getNames(obj);      if (names != null) {        for (int i=0; i < names.length; i++) {          String filter=names[i];          JSONArray array=new JSONArray();          convert_extraction_1(datasetFilters,obj,filter,array);        }      }    }  }  if (widgetFilters != null) {    for (int i=0; i < widgetFilters.length(); i++) {      JSONObject widgetFilter;      convert_extraction_2(widgetFilters,datasetFilters,i);    }  }  try {    selections.put(dataSetLabel,datasetFilters);  } catch (  JSONException e) {  }  return selections;}",
+            "extraction_name": "Extraction2",
+            "prediction": "addFilterToDataset",
+            "similarity": null,
+            "file_name": "knowage-core.src.main.java.it.eng.knowage.document.export.cockpit.converter.SelectionsConverter.convert.Extraction2.java",
+            "updated_code": "@Override public JSONObject convert(JSONArray widgetFilters){  ;  JSONObject selections=new JSONObject();  JSONObject datasetFilters=new JSONObject();  if (filters != null) {    JSONObject obj=filters.optJSONObject(dataSetLabel);    if (obj != null) {      String[] names=JSONObject.getNames(obj);      if (names != null) {        for (int i=0; i < names.length; i++) {          String filter=names[i];          JSONArray array=new JSONArray();          addFilterToDataset(datasetFilters,obj,filter,array);        }      }    }  }  if (widgetFilters != null) {    for (int i=0; i < widgetFilters.length(); i++) {      JSONObject widgetFilter;      extractWidgetFilter(widgetFilters,datasetFilters,i);    }  }  try {    selections.put(dataSetLabel,datasetFilters);  } catch (  JSONException e) {  }  return selections;}"
+        }
+    ],
+    "file_name": null
+}

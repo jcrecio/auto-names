@@ -1,0 +1,37 @@
+{
+    "original": {
+        "method_name": "translate",
+        "code": "public String translate(String propertyName){switch (this) {case SnakeCase:{      StringBuilder buf=new StringBuilder();      for (int i=0; i < propertyName.length(); ++i) {        char ch=propertyName.charAt(i);        if (ch >= 'A' && ch <= 'Z') {          char ch_ucase=(char)(ch + 32);          if (i > 0) {            buf.append('_');          }          buf.append(ch_ucase);        } else {          buf.append(ch);        }      }      return buf.toString();    }case KebabCase:{    StringBuilder buf=new StringBuilder();    for (int i=0; i < propertyName.length(); ++i) {      char ch=propertyName.charAt(i);      if (ch >= 'A' && ch <= 'Z') {        char ch_ucase=(char)(ch + 32);        if (i > 0) {          buf.append('-');        }        buf.append(ch_ucase);      } else {        buf.append(ch);      }    }    return buf.toString();  }case PascalCase:{  char ch=propertyName.charAt(0);  if (ch >= 'a' && ch <= 'z') {    char[] chars=propertyName.toCharArray();    chars[0]-=32;    return new String(chars);  }  return propertyName;}case CamelCase:{char ch=propertyName.charAt(0);if (ch >= 'A' && ch <= 'Z') {  char[] chars=propertyName.toCharArray();  chars[0]+=32;  return new String(chars);}return propertyName;}case NoChange:case NeverUseThisValueExceptDefaultValue:default:return propertyName;}}",
+        "extraction_name": null,
+        "predictions": [
+            "translate",
+            "translateCase"
+        ],
+        "similarities": [
+            1.0,
+            0.68603909649788
+        ],
+        "file_name": "fastjson.src.main.java.com.alibaba.fastjson.PropertyNamingStrategy.translate.Original.java"
+    },
+    "extractions": [
+        {
+            "method_name": "translate",
+            "code": "public String translate(String propertyName){switch (this) {case SnakeCase:{      StringBuilder buf=new StringBuilder();      for (int i=0; i < propertyName.length(); ++i) {        char ch=propertyName.charAt(i);        if (ch >= 'A' && ch <= 'Z') {          char ch_ucase=(char)(ch + 32);          if (i > 0) {            buf.append('_');          }          buf.append(ch_ucase);        } else {          buf.append(ch);        }      }      return buf.toString();    }case KebabCase:{    StringBuilder buf=translate_extraction_2(propertyName);    return buf.toString();  }case PascalCase:{  char ch=propertyName.charAt(0);  if (ch >= 'a' && ch <= 'z') {    char[] chars=propertyName.toCharArray();    chars[0]-=32;    return new String(chars);  }  return propertyName;}case CamelCase:{char ch=propertyName.charAt(0);if (ch >= 'A' && ch <= 'Z') {  char[] chars=propertyName.toCharArray();  chars[0]+=32;  return new String(chars);}return propertyName;}case NoChange:case NeverUseThisValueExceptDefaultValue:default:return propertyName;}}",
+            "extraction_name": "Extraction1",
+            "prediction": "translateKebabCase",
+            "similarity": null,
+            "file_name": "fastjson.src.main.java.com.alibaba.fastjson.PropertyNamingStrategy.translate.Extraction1.java",
+            "updated_code": "public String translate(String propertyName){switch (this) {case SnakeCase:{      StringBuilder buf=new StringBuilder();      for (int i=0; i < propertyName.length(); ++i) {        char ch=propertyName.charAt(i);        if (ch >= 'A' && ch <= 'Z') {          char ch_ucase=(char)(ch + 32);          if (i > 0) {            buf.append('_');          }          buf.append(ch_ucase);        } else {          buf.append(ch);        }      }      return buf.toString();    }case KebabCase:{    StringBuilder buf=translateKebabCase(propertyName);    return buf.toString();  }case PascalCase:{  char ch=propertyName.charAt(0);  if (ch >= 'a' && ch <= 'z') {    char[] chars=propertyName.toCharArray();    chars[0]-=32;    return new String(chars);  }  return propertyName;}case CamelCase:{char ch=propertyName.charAt(0);if (ch >= 'A' && ch <= 'Z') {  char[] chars=propertyName.toCharArray();  chars[0]+=32;  return new String(chars);}return propertyName;}case NoChange:case NeverUseThisValueExceptDefaultValue:default:return propertyName;}}"
+        },
+        {
+            "method_name": "translate",
+            "code": "public String translate(String propertyName){switch (this) {case SnakeCase:{      StringBuilder buf=translate_extraction_1(propertyName);      return buf.toString();    }case KebabCase:{    StringBuilder buf=translate_extraction_2(propertyName);    return buf.toString();  }case PascalCase:{  char ch=propertyName.charAt(0);  if (ch >= 'a' && ch <= 'z') {    char[] chars=propertyName.toCharArray();    chars[0]-=32;    return new String(chars);  }  return propertyName;}case CamelCase:{char ch=propertyName.charAt(0);if (ch >= 'A' && ch <= 'Z') {  char[] chars=propertyName.toCharArray();  chars[0]+=32;  return new String(chars);}return propertyName;}case NoChange:case NeverUseThisValueExceptDefaultValue:default:return propertyName;}}",
+            "extraction_name": "Extraction2",
+            "prediction": "translateSnakeCase",
+            "similarity": null,
+            "file_name": "fastjson.src.main.java.com.alibaba.fastjson.PropertyNamingStrategy.translate.Extraction2.java",
+            "updated_code": "public String translate(String propertyName){switch (this) {case SnakeCase:{      StringBuilder buf=translateSnakeCase(propertyName);      return buf.toString();    }case KebabCase:{    StringBuilder buf=translateKebabCase(propertyName);    return buf.toString();  }case PascalCase:{  char ch=propertyName.charAt(0);  if (ch >= 'a' && ch <= 'z') {    char[] chars=propertyName.toCharArray();    chars[0]-=32;    return new String(chars);  }  return propertyName;}case CamelCase:{char ch=propertyName.charAt(0);if (ch >= 'A' && ch <= 'Z') {  char[] chars=propertyName.toCharArray();  chars[0]+=32;  return new String(chars);}return propertyName;}case NoChange:case NeverUseThisValueExceptDefaultValue:default:return propertyName;}}"
+        }
+    ],
+    "file_name": null
+}

@@ -1,0 +1,88 @@
+/** 
+ * Inserts/Modifies the detail of a low functionality according to the user request. When a parameter use mode is modified, the <code>modifyLowFunctionality</code> method is called; when a new parameter use mode is added, the <code>insertLowFunctionality</code> method is called. These two cases are differentiated by the <code>mod</code> String input value .
+ * @param request The request information contained in a SourceBean Object
+ * @param mod A request string used to differentiate insert/modify operations
+ * @param response The response SourceBean
+ * @throws EMFUserError If an exception occurs
+ * @throws SourceBeanException If a SourceBean exception occurs
+ */
+private void modDettaglioFunctionality(SourceBean request,String mod,SourceBean response) throws EMFUserError, SourceBeanException {
+  HashMap<String,String> logParam=new HashMap();
+  try {
+    RequestContainer requestContainer=this.getRequestContainer();
+    ResponseContainer responseContainer=this.getResponseContainer();
+    session=requestContainer.getSessionContainer();
+    SessionContainer permanentSession=session.getPermanentContainer();
+    profile=(IEngUserProfile)permanentSession.getAttribute(IEngUserProfile.ENG_USER_PROFILE);
+    LowFunctionality lowFunct=recoverLowFunctionalityDetails(request,mod);
+    logParam.put("Functionality_Name",lowFunct.getName());
+    response.setAttribute(FUNCTIONALITY_OBJ,lowFunct);
+    response.setAttribute(AdmintoolsConstants.MODALITY,mod);
+    EMFErrorHandler errorHandler=getErrorHandler();
+    Collection errors=errorHandler.getErrors();
+    if (errors != null && errors.size() > 0) {
+      Iterator iterator=errors.iterator();
+      while (iterator.hasNext()) {
+        Object error=iterator.next();
+        if (error instanceof EMFValidationError) {
+          Integer parentFolderId=lowFunct.getParentId();
+          LowFunctionality parentFolder=null;
+          if (parentFolderId != null) {
+            parentFolder=DAOFactory.getLowFunctionalityDAO().loadLowFunctionalityByID(parentFolderId,false);
+          }
+          if (parentFolder == null) {
+            AuditLogUtilities.updateAudit(getHttpRequest(),profile,"FUNCTIONALITY.ADD",logParam,"KO");
+            throw new Exception("Parent folder not available.");
+          }
+ else {
+            response.setAttribute(AdmintoolsConstants.PATH_PARENT,parentFolder.getPath());
+          }
+          return;
+        }
+      }
+    }
+    if (mod.equalsIgnoreCase(AdmintoolsConstants.DETAIL_INS)) {
+      DAOFactory.getLowFunctionalityDAO().insertLowFunctionality(lowFunct,profile);
+      try {
+        AuditLogUtilities.updateAudit(getHttpRequest(),profile,"FUNCTIONALITY.ADD",logParam,"OK");
+      }
+ catch (      Exception e) {
+        e.printStackTrace();
+      }
+    }
+ else     if (mod.equalsIgnoreCase(AdmintoolsConstants.DETAIL_MOD)) {
+      DAOFactory.getLowFunctionalityDAO().modifyLowFunctionality(lowFunct);
+      try {
+        AuditLogUtilities.updateAudit(getHttpRequest(),profile,"FUNCTIONALITY.MODIFY",logParam,"OK");
+      }
+ catch (      Exception e) {
+        e.printStackTrace();
+      }
+      Set set=new HashSet();
+      loadRolesToErase(lowFunct,set);
+      DAOFactory.getLowFunctionalityDAO().deleteInconsistentRoles(set);
+    }
+  }
+ catch (  EMFUserError eex) {
+    try {
+      AuditLogUtilities.updateAudit(getHttpRequest(),profile,"FUNCTIONALITY.ADD/MODIFY",logParam,"ERR");
+    }
+ catch (    Exception e) {
+      e.printStackTrace();
+    }
+    EMFErrorHandler errorHandler=getErrorHandler();
+    errorHandler.addError(eex);
+    return;
+  }
+catch (  Exception ex) {
+    try {
+      AuditLogUtilities.updateAudit(getHttpRequest(),profile,"FUNCTIONALITY.ADD/MODIFY",logParam,"ERR");
+    }
+ catch (    Exception e) {
+      e.printStackTrace();
+    }
+    SpagoBITracer.major(AdmintoolsConstants.NAME_MODULE,"DetailFunctionalityModule","modDettaglioFunctionality","Cannot fill response container",ex);
+    throw new EMFUserError(EMFErrorSeverity.ERROR,100);
+  }
+  response.setAttribute(AdmintoolsConstants.LOOPBACK,"true");
+}
