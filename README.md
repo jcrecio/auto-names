@@ -1,5 +1,7 @@
 # Work and experiment
 This code has been created to support the experiment described by the work *Naming Methods Automatically after Refactoring Operations*.
+The paper for the work can be found [here](
+https://github.com/jcrecio/auto-names/blob/main/Naming_Methods_Automatically_after_Refactoring_Operations.pdf).
 
 
 It makes use of the *text-davinci-003* model to make method names predictions.
