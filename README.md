@@ -3,7 +3,6 @@ This code has been created to support the experiment described by the work *Nami
 The paper for the work can be found [here](
 https://github.com/jcrecio/auto-names/blob/main/Naming_Methods_Automatically_after_Refactoring_Operations.pdf).
 
-Reference in [Zenodo](https://zenodo.org/record/8132928).
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8132928.svg)](https://doi.org/10.5281/zenodo.8132928)
 
 
