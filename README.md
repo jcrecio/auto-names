@@ -1,7 +1,6 @@
 # Work and experiment
 This code has been created to support the experiment described by the work *Naming Methods Automatically after Refactoring Operations*.
-The paper for the work can be found [here](
-https://github.com/jcrecio/auto-names/blob/main/Naming_Methods_Automatically_after_Refactoring_Operations.pdf).
+The paper for the work can be found [here](https://www.researchgate.net/publication/372288807_Naming_Methods_Automatically_after_Refactoring_Operations).
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8132928.svg)](https://doi.org/10.5281/zenodo.8132928)
 
