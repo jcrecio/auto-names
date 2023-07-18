@@ -28,12 +28,12 @@ predict_original_versions = {
 
 def model_call(prompt):
     try:
-        response = requests.post("https://api.openai.com/v1/completions",
+        response = requests.post("https://api.openai.com/v1/chat/completions",
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "none" # INPUT YOUR OPEN AI API KEY
             },
-            json={ "model": "text-davinci-003", 
+            json={ "model": "gpt-4", 
                   "prompt": prompt, 
                   "n": 1, 
                   "temperature": 0

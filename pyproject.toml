@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "auto-names"
+version = "0.1.0"
+description = ""
+authors = ["jcrecio <juan.carlos.recio.abad@gmail.com>"]
+readme = "README.md"
+packages = [{include = "auto_names"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+matplotlib = "^3.7.2"
+numpy = "^1.25.1"
+requests = "^2.31.0"
+spacy = "^3.6.0"
+wn = "^0.9.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
