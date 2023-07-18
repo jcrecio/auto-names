@@ -13,6 +13,9 @@ numpy = "^1.25.1"
 requests = "^2.31.0"
 spacy = "^3.6.0"
 wn = "^0.9.4"
+openai = "^0.27.8"
+tenacity = "^8.2.2"
+termcolor = "^2.3.0"
 
 
 [build-system]

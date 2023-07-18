@@ -1,5 +1,6 @@
 import requests
 import time
+import os
 from objects import Error
 
 sleep_api = 0 # seconds
@@ -31,7 +32,7 @@ def model_call(prompt):
         response = requests.post("https://api.openai.com/v1/chat/completions",
             headers={
                 "Content-Type": "application/json",
-                "Authorization": "none" # INPUT YOUR OPEN AI API KEY
+                "Authorization": os.getenv('OPEN_AI_KEY')
             },
             json={ "model": "gpt-4", 
                   "prompt": prompt, 

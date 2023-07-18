@@ -8,10 +8,15 @@ The paper for the work can be found [here](https://www.researchgate.net/publicat
 It makes use of the *text-davinci-003* model to make method names predictions.
 
 ## Setup
-In order to run the experiment you will need an OpenAI API key to authorize the REST HTTP requests to the model, that key you will need to add it into the authorization header in file open_api_model.py
+In order to run the experiment you will need an OpenAI API key to authorize the REST HTTP requests to the model, then store your key in the `OPEN_AI_KEY` environment variable.
+
+Install poetry in your OS
+- Run `poetry shell` to activate the environment
+- Run `poetry install` to install all the dependencies
+- Run `python -m spacy download en_core_web_md` so the dependency SpaCy has access to the english model
 
 ## Run the script
-1. To run the script, just use the command: ```python run_experiment.py <folder with java codes to predict>```
+To run the script, just use the command: ```python run_experiment.py <folder with java codes to predict>```
 
 The structure of the folder must be
 - method.Original.java
