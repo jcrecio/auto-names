@@ -6,9 +6,6 @@
 ## Version 1. 2023-07-06
 **Abstract**. In Object-oriented Programming (OOP), the Cognitive Complexity (CC) of software is a metric of the difficulty associated with un-derstanding and maintaining the source code. This is usually measuredat the method level, taking into account the number of control flow sen-tences and their nesting level. One way to reduce the CC associated toa method is by extracting code into new methods without altering anyexisting functionality. However, this involves deciding on new names thatare representative of the functionality of the extracted code. This workfocuses on large language models to automate the process of assigningnew methods names after refactoring operations in software projects.We use the OpenAI Chat API with the textdavinci003 model in order toperform coding tasks. This work studies the capability of this techniquefor assigning names to new extracted methods during the evolution of acode base. Such evolution comprises continuous extraction operations tostudy how the method name semantics stability evolves. We found theprecision of the model to be highly acceptable, achieving in many casesa level similar to that of a human. However, there are also a few casesin which it fails to provide appropriate names or does not even providea name inside the indicated standards. 
 
-(PDF) Naming Methods Automatically after Refactoring Operations. Available from: https://www.researchgate.net/publication/372288807_Naming_Methods_Automatically_after_Refactoring_Operations [accessed Jul 20 2023].
-
-
 ## Work and experiment
 This code has been created to support the experiment described by the work *Naming Methods Automatically after Refactoring Operations*.
 The paper for the work can be found [here](https://www.researchgate.net/publication/372288807_Naming_Methods_Automatically_after_Refactoring_Operations).
