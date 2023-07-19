@@ -18,6 +18,9 @@ tenacity = "^8.2.2"
 termcolor = "^2.3.0"
 
 
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.24.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
