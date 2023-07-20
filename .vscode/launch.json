@@ -8,7 +8,7 @@
             "program": "run_experiment.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["datasets/Archive_0_no_nested", "gpt-4"]
+            "args": ["datasets/Archive_0_no_nested", "gpt-4", "output-gpt-4"]
         },
     ]
 }

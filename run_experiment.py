@@ -22,8 +22,9 @@ from utils import (
 )
 
 from_folder = sys.argv[1]
-projects = dict()
 model = OpenAiModel(sys.argv[2])
+output_folder = sys.argv[3]
+projects = dict()
 
 ########## Load dataset from folder argument ##########
 
@@ -73,7 +74,14 @@ for project_key, project in projects.items():
         for method_key, method in class_name.methods.items():
             log("----- Target method: " + method.original.method_name)
             if os.path.exists(
-                "output/" + project_key + "." + class_key + "." + method_key + ".json"
+                output_folder
+                + "/"
+                + project_key
+                + "."
+                + class_key
+                + "."
+                + method_key
+                + ".json"
             ):
                 log("------ Method prediction already exists, skipping method...")
                 continue
@@ -154,6 +162,13 @@ for project_key, project in projects.items():
 
             json_str = json.dumps(method, default=serialize, indent=4)
             write_file(
-                "output/" + project_key + "." + class_key + "." + method_key + ".json",
+                output_folder
+                + "/"
+                + project_key
+                + "."
+                + class_key
+                + "."
+                + method_key
+                + ".json",
                 json_str,
             )
