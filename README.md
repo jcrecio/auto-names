@@ -1,4 +1,12 @@
-# Work and experiment
+# auto-names
+## Version 2. Draft
+- Refactor and improve the project code.
+- Parameterize values such as the model, output, etc
+
+## Version 1. 2023-07-06
+**Abstract**. In Object-oriented Programming (OOP), the Cognitive Complexity (CC) of software is a metric of the difficulty associated with un-derstanding and maintaining the source code. This is usually measuredat the method level, taking into account the number of control flow sen-tences and their nesting level. One way to reduce the CC associated toa method is by extracting code into new methods without altering anyexisting functionality. However, this involves deciding on new names thatare representative of the functionality of the extracted code. This workfocuses on large language models to automate the process of assigningnew methods names after refactoring operations in software projects.We use the OpenAI Chat API with the textdavinci003 model in order toperform coding tasks. This work studies the capability of this techniquefor assigning names to new extracted methods during the evolution of acode base. Such evolution comprises continuous extraction operations tostudy how the method name semantics stability evolves. We found theprecision of the model to be highly acceptable, achieving in many casesa level similar to that of a human. However, there are also a few casesin which it fails to provide appropriate names or does not even providea name inside the indicated standards. 
+
+## Work and experiment
 This code has been created to support the experiment described by the work *Naming Methods Automatically after Refactoring Operations*.
 The paper for the work can be found [here](https://www.researchgate.net/publication/372288807_Naming_Methods_Automatically_after_Refactoring_Operations).
 
@@ -8,10 +16,15 @@ The paper for the work can be found [here](https://www.researchgate.net/publicat
 It makes use of the *text-davinci-003* model to make method names predictions.
 
 ## Setup
-In order to run the experiment you will need an OpenAI API key to authorize the REST HTTP requests to the model, that key you will need to add it into the authorization header in file open_api_model.py
+In order to run the experiment you will need an OpenAI API key to authorize the REST HTTP requests to the model, then store your key in the `OPEN_AI_KEY` environment variable.
+
+Install poetry in your OS
+- Run `poetry shell` to activate the environment
+- Run `poetry install` to install all the dependencies
+- Run `python -m spacy download en_core_web_md` so the dependency SpaCy has access to the english model
 
 ## Run the script
-1. To run the script, just use the command: ```python run_experiment.py <folder with java codes to predict>```
+To run the script, just use the command: ```python run_experiment.py <folder with java codes to predict>```
 
 The structure of the folder must be
 - method.Original.java

@@ -8,25 +8,7 @@
             "program": "run_experiment.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["datasets/Archive_0_no_nested"]
-        },
-        {
-            "name": "Test prompt",
-            "type": "python",
-            "request": "launch",
-            "program": "test_prompt.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": ["output_27042023/bytecode-viewer.src.main.java.the.bytecode.club.bytecodeviewer.decompilers.bytecode.InstructionPrinter.printInstruction.json"]
-        },
-        {
-            "name": "Extract metrics",
-            "type": "python",
-            "request": "launch",
-            "program": "calculate_metrics.py",
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "args": []
+            "args": ["datasets/Archive_0_no_nested", "gpt-4", "output-gpt-4"]
         },
     ]
 }
