@@ -24,8 +24,13 @@ Install poetry in your OS
 - Run `python -m spacy download en_core_web_md` so the dependency SpaCy has access to the english model
 
 ## Run the script
-To run the script, just use the command: ```python run_experiment.py <input folder> <model> <output folder>```
-To replicate the experiment from the paper, use the command: ```python run_experiment.py dataset/Archive0_no_nested text-davinci-003 output```
+To run the script, just use the command:
+
+```python run_experiment.py <input folder> <model> <output folder>```
+
+To replicate the experiment from the paper (Version 1 stable), use the command:
+
+```python run_experiment.py dataset/Archive0_no_nested text-davinci-003 output```
 
 The structure of the input folder must be
 ```
