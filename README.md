@@ -3,20 +3,20 @@
 - Refactor and improve the project code.
 - Parameterize values such as the model, output, etc
 
-## Version 1. 2023-07-06
-**Abstract**. In Object-oriented Programming (OOP), the Cognitive Complexity (CC) of software is a metric of the difficulty associated with un-derstanding and maintaining the source code. This is usually measuredat the method level, taking into account the number of control flow sen-tences and their nesting level. One way to reduce the CC associated toa method is by extracting code into new methods without altering anyexisting functionality. However, this involves deciding on new names thatare representative of the functionality of the extracted code. This workfocuses on large language models to automate the process of assigningnew methods names after refactoring operations in software projects.We use the OpenAI Chat API with the textdavinci003 model in order toperform coding tasks. This work studies the capability of this techniquefor assigning names to new extracted methods during the evolution of acode base. Such evolution comprises continuous extraction operations tostudy how the method name semantics stability evolves. We found theprecision of the model to be highly acceptable, achieving in many casesa level similar to that of a human. However, there are also a few casesin which it fails to provide appropriate names or does not even providea name inside the indicated standards. 
+## Version 1. Stable version. Published on  July 7th, 2023
+**Abstract**. In Object-oriented Programming (OOP), the Cognitive Complexity (CC) of software is a metric of the difficulty associated with un-derstanding and maintaining the source code. This is usually measuredat the method level, taking into account the number of control flow sen-tences and their nesting level. One way to reduce the CC associated toa method is by extracting code into new methods without altering anyexisting functionality. However, this involves deciding on new names thatare representative of the functionality of the extracted code. This workfocuses on large language models to automate the process of assigningnew methods names after refactoring operations in software projects.We use the OpenAI Chat API with the textdavinci003 model in order toperform coding tasks. This work studies the capability of this techniquefor assigning names to new extracted methods during the evolution of acode base. Such evolution comprises continuous extraction operations to study how the method name semantics stability evolves. We found theprecision of the model to be highly acceptable, achieving in many casesa level similar to that of a human. However, there are also a few casesin which it fails to provide appropriate names or does not even providea name inside the indicated standards. 
 
 ## Work and experiment
 This code has been created to support the experiment described by the work *Naming Methods Automatically after Refactoring Operations*.
-The paper for the work can be found [here](https://www.researchgate.net/publication/372288807_Naming_Methods_Automatically_after_Refactoring_Operations).
+The paper for the work can be in the [research page for the work](https://www.researchgate.net/publication/372288807_Naming_Methods_Automatically_after_Refactoring_Operations)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8132928.svg)](https://doi.org/10.5281/zenodo.8132928)
+It is also available in Zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8132928.svg)](https://doi.org/10.5281/zenodo.8132928)
 
 
-It makes use of the *text-davinci-003* model to make method names predictions.
+It makes use of the OpenAI *text-davinci-003* model to make method names predictions.
 
 ## Setup
-In order to run the experiment you will need an OpenAI API key to authorize the REST HTTP requests to the model, then store your key in the `OPEN_AI_KEY` environment variable.
+In order to run the experiment you will need an OpenAI API key to authorize the REST HTTP requests to the AI model. The key has to be stored in the `OPEN_AI_KEY` environment variable.
 
 Install poetry in your OS
 - Run `poetry shell` to activate the environment
@@ -24,19 +24,31 @@ Install poetry in your OS
 - Run `python -m spacy download en_core_web_md` so the dependency SpaCy has access to the english model
 
 ## Run the script
-To run the script, just use the command: ```python run_experiment.py <folder with java codes to predict>```
+To run the script, just use the command: ```python run_experiment.py <input dataset folder>```
 
-The structure of the folder must be
-- method.Original.java
-- method.Extraction1.java
-- method.Extraction2.java
+The structure of the input folder must be
+```
+- method1.Original.java
+- method1.Extraction1.java
+- method1.Extraction2.java
 ...
-- method.ExtractionN.java
+- method1.ExtractionN.java
+...
+...
+- method2.Original.java
+- method2.Extraction1.java
+- method2.Extraction2.java
+...
+- method2.ExtractionN.java
+```
 
-
+The reasoning: 
+The project aims to automatically predict the name for methods after having applied some extraction-refactoring operations of code. For every method we can perform consecutive extractions of code. Each extraction should provide more information and context to fine tune the method name more precisely.
+method.Original.java includes the original code method, method.Extractoin1.java includes the method after having applied one extraction, etc
+  
 ## Output results
 The results of the predictions will be stored in a folder `/Output`
-Each method (Original + its extractions) will produce a JSON result file inside folder.
+Each method (Original and its extractions) will produce a JSON result file inside folder.
 
 
 Example:
@@ -46,13 +58,60 @@ Example:
 - MOEAFramework.src.org.moeaframework.Instrumenter.instrument.Extraction2.java
 
 
-will produce the file `MOEAFramework.src.org.moeaframework.Instrumenter.instrument.json` with the results.
+will produce the file `output/MOEAFramework.src.org.moeaframework.Instrumenter.instrument.json` with the results.
+The shape of the results contains the following information:
+
+- Metadata about the original method and the extractions.
+- Predictions for the method after each consecutive refactor extraction operation.
+- Computed similarities between each prediction and the original method.
+- Original code, code after each extraction and predicted name for all the extractions.
+
+Next, it is displayed the JSON output result for the method `MOEAFramework.src.org.moeaframework.Instrumenter.instrument` which has gone through 2 extractions operations.
+```{json}
+{
+    "original": {
+        "method_name": "samplePopulation",
+        "code": "/**  * Samples a new population. */private void samplePopulation(){  boolean feasible=true;  int N=problem.getNumberOfVariables();  if ((iteration - lastEigenupdate) > 1.0 / ccov / N/ 5.0) {    eigendecomposition();  }  if (checkConsistency) {    testAndCorrectNumerics();  }  population.clear();  for (int i=0; i < lambda; i++) {    Solution solution=problem.newSolution();    if (diagonalIterations >= iteration) {      do {        feasible=true;        for (int j=0; j < N; j++) {          RealVariable variable=(RealVariable)solution.getVariable(j);          double value=xmean[j] + sigma * diagD[j] * PRNG.nextGaussian();          if (value < variable.getLowerBound() || value > variable.getUpperBound()) {            feasible=false;            break;          }          variable.setValue(value);        }      } while (!feasible);    } else {      double[] artmp=new double[N];      do {        feasible=true;        for (int j=0; j < N; j++) {          artmp[j]=diagD[j] * PRNG.nextGaussian();        }        for (int j=0; j < N; j++) {          RealVariable variable=(RealVariable)solution.getVariable(j);          double sum=0.0;          for (int k=0; k < N; k++) {            sum+=B[j][k] * artmp[k];          }          double value=xmean[j] + sigma * sum;          if (value < variable.getLowerBound() || value > variable.getUpperBound()) {            feasible=false;            break;          }          variable.setValue(value);        }      } while (!feasible);    }    population.add(solution);  }  iteration++;}",
+        "extraction_name": null,
+        "predictions": [
+            "samplePopulation_checkFeasibility",
+            "samplePopulation"
+        ],
+        "similarities": [
+            0.8243320889090123,
+            1.0
+        ],
+        "file_name": "MOEAFramework.src.org.moeaframework.algorithm.CMAES.samplePopulation.Original.java"
+    },
+    "extractions": [
+        {
+            "method_name": "samplePopulation",
+            "code": "/**  * Samples a new population. */private void samplePopulation(){  boolean feasible=true;  int N=problem.getNumberOfVariables();  if ((iteration - lastEigenupdate) > 1.0 / ccov / N/ 5.0) {    eigendecomposition();  }  if (checkConsistency) {    testAndCorrectNumerics();  }  population.clear();  for (int i=0; i < lambda; i++) {    Solution solution=problem.newSolution();    if (diagonalIterations >= iteration) {      do {        feasible=true;        for (int j=0; j < N; j++) {          RealVariable variable=(RealVariable)solution.getVariable(j);          double value=xmean[j] + sigma * diagD[j] * PRNG.nextGaussian();          if (value < variable.getLowerBound() || value > variable.getUpperBound()) {            feasible=false;            break;          }          variable.setValue(value);        }      } while (!feasible);    } else {      double[] artmp=new double[N];      do {        feasible=samplePopulation_extraction_2(N,solution,artmp);      } while (!feasible);    }    population.add(solution);  }  iteration++;}",
+            "extraction_name": "Extraction1",
+            "prediction": "samplePopulation_checkFeasibility",
+            "similarity": null,
+            "file_name": "MOEAFramework.src.org.moeaframework.algorithm.CMAES.samplePopulation.Extraction1.java",
+            "updated_code": "/**  * Samples a new population. */private void samplePopulation(){  boolean feasible=true;  int N=problem.getNumberOfVariables();  if ((iteration - lastEigenupdate) > 1.0 / ccov / N/ 5.0) {    eigendecomposition();  }  if (checkConsistency) {    testAndCorrectNumerics();  }  population.clear();  for (int i=0; i < lambda; i++) {    Solution solution=problem.newSolution();    if (diagonalIterations >= iteration) {      do {        feasible=true;        for (int j=0; j < N; j++) {          RealVariable variable=(RealVariable)solution.getVariable(j);          double value=xmean[j] + sigma * diagD[j] * PRNG.nextGaussian();          if (value < variable.getLowerBound() || value > variable.getUpperBound()) {            feasible=false;            break;          }          variable.setValue(value);        }      } while (!feasible);    } else {      double[] artmp=new double[N];      do {        feasible=samplePopulation_checkFeasibility(N,solution,artmp);      } while (!feasible);    }    population.add(solution);  }  iteration++;}"
+        },
+        {
+            "method_name": "samplePopulation",
+            "code": "/**  * Samples a new population. */private void samplePopulation(){  boolean feasible=true;  int N=problem.getNumberOfVariables();  if ((iteration - lastEigenupdate) > 1.0 / ccov / N/ 5.0) {    eigendecomposition();  }  if (checkConsistency) {    testAndCorrectNumerics();  }  population.clear();  for (int i=0; i < lambda; i++) {    Solution solution=problem.newSolution();    if (diagonalIterations >= iteration) {      do {        feasible=true;        feasible=samplePopulation_extraction_1(feasible,N,solution);      } while (!feasible);    } else {      double[] artmp=new double[N];      do {        feasible=samplePopulation_extraction_2(N,solution,artmp);      } while (!feasible);    }    population.add(solution);  }  iteration++;}",
+            "extraction_name": "Extraction2",
+            "prediction": "samplePopulation_checkVariables",
+            "similarity": null,
+            "file_name": "MOEAFramework.src.org.moeaframework.algorithm.CMAES.samplePopulation.Extraction2.java",
+            "updated_code": "/**  * Samples a new population. */private void samplePopulation(){  boolean feasible=true;  int N=problem.getNumberOfVariables();  if ((iteration - lastEigenupdate) > 1.0 / ccov / N/ 5.0) {    eigendecomposition();  }  if (checkConsistency) {    testAndCorrectNumerics();  }  population.clear();  for (int i=0; i < lambda; i++) {    Solution solution=problem.newSolution();    if (diagonalIterations >= iteration) {      do {        feasible=true;        feasible=samplePopulation_checkVariables(feasible,N,solution);      } while (!feasible);    } else {      double[] artmp=new double[N];      do {        feasible=samplePopulation_checkFeasibility(N,solution,artmp);      } while (!feasible);    }    population.add(solution);  }  iteration++;}"
+        }
+    ],
+    "file_name": null
+}
+```
 
 ## Re-run specific methods only
 If a json file with the results for a method exists, the script will not produce a new result. You need to remove/rename the file to get a new one. Thus, only the removed/renames one will be regenerated. (This is useful if you change the prompt to send to the model REST API).
 
 ## text-davinci-003 prompt
-In the file open_api_model.py there are multiple versions of the prompt that can be sent. If a new one is needed just add it to the file, the predictions to codex can be called specifying the explicit version or changing the default in the calls to codex.
+In the file open_api_model.py there are multiple versions of the prompt that can be sent. If a new one is needed just add it to the file, the predictions to the model can be called specifying the explicit version or changing the default in the calls to the model.
 
 
 Example:
@@ -74,3 +133,5 @@ Example:
 
 ## Calculate metrics
 The metrics described in the experiment can all be represented using the file calculate_metrics.py
+
+This file will scan the `output` folder to produce the graphical results.
