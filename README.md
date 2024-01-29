@@ -4,7 +4,7 @@
 - Parameterize values such as the model, output, etc
 
 ## Version 1. Stable version of the project.
-**Abstract**. In Object-oriented Programming (OOP), the Cognitive Complexity (CC) of software is a metric of the difficulty associated with un-derstanding and maintaining the source code. This is usually measuredat the method level, taking into account the number of control flow sen-tences and their nesting level. One way to reduce the CC associated toa method is by extracting code into new methods without altering anyexisting functionality. However, this involves deciding on new names thatare representative of the functionality of the extracted code. This workfocuses on large language models to automate the process of assigningnew methods names after refactoring operations in software projects.We use the OpenAI Chat API with the textdavinci003 model in order toperform coding tasks. This work studies the capability of this techniquefor assigning names to new extracted methods during the evolution of acode base. Such evolution comprises continuous extraction operations tostudy how the method name semantics stability evolves. We found theprecision of the model to be highly acceptable, achieving in many casesa level similar to that of a human. However, there are also a few casesin which it fails to provide appropriate names or does not even providea name inside the indicated standards. 
+**Abstract**. In Object-oriented Programming (OOP), the Cognitive Complexity (CC) of software is a metric of the difficulty associated with un-derstanding and maintaining the source code. This is usually measuredat the method level, taking into account the number of control flow sen-tences and their nesting level. One way to reduce the CC associated toa method is by extracting code into new methods without altering anyexisting functionality. However, this involves deciding on new names thatare representative of the functionality of the extracted code. This workfocuses on large language models to automate the process of assigningnew methods names after refactoring operations in software projects.We use the OpenAI Chat API with the textdavinci003 model in order toperform coding tasks. This work studies the capability of this techniquefor assigning names to new extracted methods during the evolution of acode base. Such evolution comprises continuous extraction operations tostudy how the method name semantics stability evolves. We found theprecision of the model to be highly acceptable, achieving in many casesa level similar to that of a human. However, there are also a few casesin which it fails to provide appropriate names or does not even provide a name inside the indicated standards. 
 
 ## Work and experiment
 It makes use of the OpenAI *text-davinci-003* model to make method names predictions.
@@ -44,7 +44,7 @@ The structure of the input folder must be
 
 The reasoning: 
 The project aims to automatically predict the name for methods after having applied some extraction-refactoring operations of code. For every method we can perform consecutive extractions of code. Each extraction should provide more information and context to fine tune the method name more precisely.
-method.Original.java includes the original code method, method.Extractoin1.java includes the method after having applied one extraction, etc
+method.Original.java includes the original code method, method.Extraction1.java includes the method after having applied one extraction, etc
   
 ## Output results
 The results of the predictions will be stored in a folder `/Output`
@@ -119,12 +119,12 @@ Example:
     "v3": lambda x, y, z: """Given the initial java code: '{original_code}' and following code: '{extraction_code}' 
     which functionally is the same as the initial code, but having applied an extract refactor operation. 
     Can you give an meaningful name for the extracted method '{method_to_compute}'? 
-    (Please consider following points: 1:Provide the method name without parentheses. 2:Do not use the keyword \'extraction\' means 
+    (Please consider following points: 1: the method name without parentheses. 2:Do not use the keyword \'extraction\' means 
     that the content of the method to predict was extracted from the initial code, so \'extracted\' keyword should not be part of 
-    method name. 3:Provide a valid method name.)"""
+    method name. 3: a valid method name.)"""
                 .format(original_code = x, extraction_code = y, method_to_compute = z),
     "v4": lambda x, y, z: """Given the initial java code: '{original_code}' and its refactored version: '{extraction_code}' 
-    Can you give a name for the extracted method '{method_to_compute}'?. Provide the method name without parentheses. Avoid the extract operation bias for the the method name prediction. Use java notation for the method name (for example, do not use _).
+    Can you give a name for the extracted method '{method_to_compute}'?.  the method name without parentheses. Avoid the extract operation bias for the the method name prediction. Use java notation for the method name (for example, do not use _).
     
     
     "v5": lambda x, y, z: .... <------------------------------------------------------ YOUR NEW PROMPT
